@@ -44,6 +44,6 @@ class Connection(Config):
             sql = f'CREATE SCHEMA IF NOT EXISTS {schema_name};'
             self.execute(sql)
             self.commit()
-            print(f"Esquema {schema_name} criado")
+            # print(f"Esquema {schema_name} criado")
         except Exception as e:
             print(f"Erro ao criar o esquema {schema_name}", e)

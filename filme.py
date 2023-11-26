@@ -5,7 +5,7 @@ class Filme(GenericTable):
         GenericTable.__init__(self)
 
     def create_table(self):
-        sql = """CREATE TABLE IF NOT EXISTS cinema.filme (
+        sql = """CREATE TABLE IF NOT EXISTS cinema.filme ( 
                 id SERIAL PRIMARY KEY,
                 nome VARCHAR(255),
                 ano_lancamento INT,

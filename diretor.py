@@ -7,14 +7,15 @@ class Diretor(GenericTable):
     def create_table(self):
         sql = """CREATE TABLE IF NOT EXISTS cinema.diretor (
                 id SERIAL PRIMARY KEY,
-                nome VARCHAR(255));"""  
+                nome VARCHAR(255),
+                idade INT);"""  
         super().create_table(sql)
 
     def drop_table(self):
         super().drop_table("cinema.diretor")
 
     def insert(self, *args):
-        sql = f'INSERT INTO cinema.diretor (nome) VALUES (%s);'
+        sql = f'INSERT INTO cinema.diretor (nome, idade) VALUES (%s, %s);'
         super().insert(sql, *args)
 
     def delete(self, id):
@@ -30,7 +31,7 @@ class Diretor(GenericTable):
         if not self.query(sql_exist):
             print("Registro não encontrado para atualizar")
         else:
-            sql = f'UPDATE cinema.diretor SET nome = %s WHERE id = {id}'
+            sql = f'UPDATE cinema.diretor SET nome = %s, idade = %s WHERE id = {id}'
             super().update(sql, *args)
     
     def get_by_id(self, id):
@@ -44,6 +45,6 @@ class Diretor(GenericTable):
         if self.get_all():
             print("--- DIRETORES ---")
             for i in self.get_all():
-                print(f"{i[0]} - {i[1]}")
+                print(f"{i[0]} - {i[1]} - {i[2]}")
         else:
             print("Não existe nenhum diretor cadastrado")
