@@ -454,6 +454,11 @@ if __name__ == "__main__":
                 elif escolha == "4":
                     id_premi = input("Digite o ID da premiação a ser buscada (id_filme,id_premiacao): ")
                     id_premi = tuple(map(int, id_premi.split(',')))
+
+                    if len(id_premi) != 2:
+                        print("\nFormato incorreto. Forneça dois números separados por vírgulas.")
+                        continue
+
                     i = indicacao_premiacao.get_by_id(id_premi)
                     if i:
                         print()
@@ -657,6 +662,11 @@ if __name__ == "__main__":
                 elif escolha == "4":
                     id_exib = input("Digite o ID da exibição a ser buscada (id_filme,id_sala,id_horario): ")
                     id_exib = tuple(map(int, id_exib.split(',')))
+
+                    if len(id_exib) != 3:
+                        print("\nFormato incorreto. Forneça três números separados por vírgulas.")
+                        continue
+                
                     e = exibicao.get_by_id(id_exib)
                     if e:
                         sql = f"""SELECT nome FROM cinema.filme WHERE id = {e[0][0]}"""
