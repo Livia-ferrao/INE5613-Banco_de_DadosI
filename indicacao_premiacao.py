@@ -1,4 +1,5 @@
 from generic_table import GenericTable
+from tabulate import tabulate
 
 class Indicacao_premiacao(GenericTable):
     def __init__(self):
@@ -45,16 +46,21 @@ class Indicacao_premiacao(GenericTable):
         return super().get_all("cinema.indicacao_premiacao")
     
     def print(self, filme, sala):
+        headers = ["Filme", "Premiação", "Ganhou?"]
+        rows =[]
         if self.get_all():
-            print("--- INDICAÇÕES A PREMIAÇÕES ---")
             for i in self.get_all():
                 sql = f"""SELECT nome FROM cinema.filme WHERE id = {i[0]}"""
                 sql_filme = filme.query(sql)
                 sql = f"""SELECT nome FROM cinema.premiacao WHERE id = {i[1]}"""
                 sql_premiacao = sala.query(sql)
+
                 if i[2] == True:
-                    print(f"{sql_filme[0][0]}, {sql_premiacao[0][0]}, Ganhou")
+                    ganhou = "Ganhou"
                 else:
-                    print(f"{sql_filme[0][0]}, {sql_premiacao[0][0]}, Perdeu")
+                    ganhou = "Perdeu"
+                rows.append([sql_filme[0][0], sql_premiacao[0][0], ganhou])
+
+            print(tabulate(rows, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))   
         else:
             print("Não existe nenhuma indicação cadastrada")

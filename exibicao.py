@@ -1,4 +1,5 @@
 from generic_table import GenericTable
+from tabulate import tabulate
 
 class Exibicao(GenericTable):
     def __init__(self):
@@ -47,8 +48,10 @@ class Exibicao(GenericTable):
         return super().get_all("cinema.exibicao")
     
     def print(self, filme, sala, horario):
+        headers = ["Filme", "Sala", "Horário", "Data"]
+        rows = []
+
         if self.get_all():
-            print("--- EXIBIÇÕES ---")
             for i in self.get_all():
                 sql = f"""SELECT nome FROM cinema.filme WHERE id = {i[0]}"""
                 sql_filme = filme.query(sql)
@@ -56,6 +59,8 @@ class Exibicao(GenericTable):
                 sql_sala = sala.query(sql)
                 sql = f"""SELECT horario FROM cinema.horario WHERE id = {i[2]}"""
                 sql_horario = horario.query(sql)
-                print(f"{sql_filme[0][0]}, {sql_sala[0][0]}, {sql_horario[0][0]}, {i[3]}")
+
+                rows.append([sql_filme[0][0], sql_sala[0][0], sql_horario[0][0], i[3]])
+            print(tabulate(rows, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
         else:
             print("Não existe nenhuma exibição cadastrada")

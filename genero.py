@@ -1,4 +1,5 @@
 from generic_table import GenericTable
+from tabulate import tabulate
 
 class Genero(GenericTable):
     def __init__(self):
@@ -41,14 +42,11 @@ class Genero(GenericTable):
         return super().get_all("cinema.genero")
     
     def print(self):
+        headers = ["ID", "Nome"]
+        rows = []
         if self.get_all():
-            print("+------------------------------+")
-            print("|           GÊNEROS            |")
-            print("+------------------------------+")
-            print("|   ID  |        Nome          |")
-            print("+------------------------------+")
             for i in self.get_all():
-                print(f"| {i[0]:^5} | {i[1]:^20} |")
-            print("+------------------------------+")
+               rows.append([i[0], i[1]])
+            print(tabulate(rows, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
         else:
             print("Não existe nenhum gênero cadastrado")

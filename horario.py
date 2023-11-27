@@ -1,4 +1,5 @@
 from generic_table import GenericTable
+from tabulate import tabulate
 
 class Horario(GenericTable):
     def __init__(self):
@@ -41,9 +42,11 @@ class Horario(GenericTable):
         return super().get_all("cinema.horario")
     
     def print(self):
+        headers = ["ID", "Horário"]
+        rows = []
         if self.get_all():
-                print("--- HORÁRIOS ---")
-                for i in self.get_all():
-                    print(f"{i[0]} - {i[1]}")
+            for i in self.get_all():
+                rows.append([i[0], i[1]])
+            print(tabulate(rows, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
         else:
             print("Não existe nenhum horário cadastrado")

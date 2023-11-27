@@ -1,4 +1,5 @@
 from generic_table import GenericTable
+from tabulate import tabulate
 
 class Sala(GenericTable):
     def __init__(self):
@@ -42,9 +43,11 @@ class Sala(GenericTable):
         return super().get_all("cinema.sala")
     
     def print(self):
+        headers = ["ID", "Nome", "Capacidade"]
+        rows = []
         if self.get_all():
-            print("--- SALAS ---")
             for i in self.get_all():
-                print(f"{i[0]} - {i[1]}, {i[2]}")
+                rows.append([i[0], i[1], i[2]])
+            print(tabulate(rows, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
         else:
             print("Não existe nenhuma sala cadastrada")

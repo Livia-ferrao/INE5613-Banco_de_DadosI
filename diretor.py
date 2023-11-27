@@ -43,18 +43,11 @@ class Diretor(GenericTable):
         return super().get_all("cinema.diretor")
     
     def print(self):
-        headers_diretor = ["ID", "Nome", "Idade"]
+        headers = ["ID", "Nome", "Idade"]
         rows = []
         if self.get_all():
-            # print("+--------------------------------------+")
-            # print("|                DIRETORES             |")
-            # print("+--------------------------------------+")
-            # print("|   ID  |          Nome        | Idade |")
-            # print("+--------------------------------------+")
             for i in self.get_all():
                 rows.append([i[0], i[1], i[2]])
-            #     print(f"| {i[0]:^5} | {i[1]:^20} | {i[2]:^5} |")
-            # print("+--------------------------------------+")
-            print(tabulate(rows, headers=headers_diretor, tablefmt="fancy_grid", maxcolwidths=20))
+            print(tabulate(rows, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
         else:
             print("Não existe nenhum diretor cadastrado")

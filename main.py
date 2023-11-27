@@ -86,6 +86,7 @@ if __name__ == "__main__":
     indicacao_premiacao.insert(4, 8, False)
     indicacao_premiacao.insert(5, 9, True)
     indicacao_premiacao.insert(3, 10, False)
+    indicacao_premiacao.insert(1, 1, False)
 
 
     sala = Sala()
@@ -193,17 +194,9 @@ if __name__ == "__main__":
                     d = diretor.get_by_id(id_diretor)
                     if d:
                         print()
-                        # print("+--------------------------------------+")
-                        # print("|                DIRETOR               |")
-                        # print("+--------------------------------------+")
-                        # print("|   ID  |          Nome        | Idade |")
-                        # print("+--------------------------------------+")
-                        # print(f"| {d[0][0]:^5} | {d[0][1]:^20} | {d[0][2]:^5} |")
-                        # print("+--------------------------------------+")
-
-                        headers_diretor = ["ID", "Nome", "Idade"]
+                        headers = ["ID", "Nome", "Idade"]
                         rows_diretor = [[d[0][0], d[0][1], d[0][2]]]
-                        print(tabulate(rows_diretor, headers=headers_diretor, tablefmt="fancy_grid", maxcolwidths=20))
+                        print(tabulate(rows_diretor, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
                     
                 elif escolha == "5":
                     if(diretor.get_all()):
@@ -253,15 +246,9 @@ if __name__ == "__main__":
                     g = genero.get_by_id(id_genero)
                     if g:
                         print()
-                        # print(f"{g[0][0]} - {g[0][1]}")
-                        print("+------------------------------+")
-                        print("|           GÊNEROS            |")
-                        print("+------------------------------+")
-                        print("|   ID  |        Nome          |")
-                        print("+------------------------------+")
-                        print(f"| {g[0][0]:^5} | {g[0][1]:^20} |")
-                        print("+------------------------------+")
-    
+                        headers = ["ID", "Nome"]
+                        row = [[g[0][0], g[0][1]]]
+                        print(tabulate(row, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
     
                 elif escolha == "5":
                     if(genero.get_all()):
@@ -395,7 +382,9 @@ if __name__ == "__main__":
                     p = premiacao.get_by_id(id_prem)
                     if p:
                         print()
-                        print(f"{p[0][0]} - {p[0][1]}, {p[0][2]}")
+                        headers = ["ID", "Nome", "Ano"]
+                        row = [[p[0][0], p[0][1], p[0][2]]]
+                        print(tabulate(row, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
     
                 elif escolha == "5":
                     if(premiacao.get_all()):
@@ -472,10 +461,16 @@ if __name__ == "__main__":
                         sql_filme = filme.query(sql)
                         sql = f"""SELECT nome FROM cinema.premiacao WHERE id = {i[0][1]}"""
                         sql_premiacao = sala.query(sql)
+
                         if i[0][2] == True:
-                            print(f"{sql_filme[0][0]}, {sql_premiacao[0][0]}, Ganhou")
+                            ganhou = "Ganhou"
                         else:
-                            print(f"{sql_filme[0][0]}, {sql_premiacao[0][0]}, Perdeu")
+                            ganhou = "Perdeu"
+            
+                        headers = ["Filme", "Premiação", "Ganhou?"]
+                        row = [[sql_filme[0][0], sql_premiacao[0][0], ganhou]]
+                        print(tabulate(row, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
+    
     
                 elif escolha == "5":
                     if(indicacao_premiacao.get_all()):
@@ -527,7 +522,9 @@ if __name__ == "__main__":
                     s = sala.get_by_id(id_sala)
                     if s:
                         print()
-                        print(f"{s[0][0]} - {s[0][1]}, {s[0][2]}")
+                        headers = ["ID", "Nome", "Capacidade"]
+                        row = [[s[0][0], s[0][1], s[0][2]]]
+                        print(tabulate(row, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
     
                 elif escolha == "5":
                     if(sala.get_all()):
@@ -576,7 +573,10 @@ if __name__ == "__main__":
                     id_horario = input("Digite o ID do horário a ser buscado: ")
                     h = horario.get_by_id(id_horario)
                     if h:
-                        print(f"{h[0][0]} - {h[0][1]}")
+                        headers = ["ID", "Horário"]
+                        row = [[h[0][0], h[0][1]]]
+                        print(tabulate(row, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
+    
     
                 elif escolha == "5":
                     if(horario.get_all()):
@@ -665,7 +665,10 @@ if __name__ == "__main__":
                         sql_sala = sala.query(sql)
                         sql = f"""SELECT horario FROM cinema.horario WHERE id = {e[0][2]}"""
                         sql_horario = horario.query(sql)
-                        print(f"{sql_filme[0][0]}, {sql_sala[0][0]}, {sql_horario[0][0]}")
+
+                        headers = ["Filme", "Sala", "Horário", "Data"]
+                        row = [[sql_filme[0][0], sql_sala[0][0], sql_horario[0][0], e[0][3]]]
+                        print(tabulate(row, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
     
                 elif escolha == "5":
                     if(exibicao.get_all()):
