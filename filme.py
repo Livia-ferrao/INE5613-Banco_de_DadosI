@@ -1,4 +1,5 @@
 from generic_table import GenericTable
+from tabulate import tabulate
 
 class Filme(GenericTable):
     def __init__(self):
@@ -45,13 +46,17 @@ class Filme(GenericTable):
         return super().get_all("cinema.filme")
     
     def print(self, diretor, genero):
+        headers = ["ID", "Nome", "Ano", "Sinopse", "Diretor", "Gênero"]
+        rows =[]
         if self.get_all():
-            print(" --- FILMES --- ")
             for i in self.get_all():
                 sql = f"""SELECT nome FROM cinema.diretor WHERE id = {i[4]}"""
                 sql_diretor = diretor.query(sql)
                 sql = f"""SELECT nome FROM cinema.genero WHERE id = {i[5]}"""
                 sql_genero = genero.query(sql)
-                print(f"{i[0]} - {i[1]}, {i[2]}, {i[3]}, {sql_diretor[0][0]}, {sql_genero[0][0]}")
+
+                rows.append([i[0], i[1], i[2], i[3], sql_diretor[0][0], sql_genero[0][0]])
+
+            print(tabulate(rows, headers=headers, tablefmt="fancy_grid", maxcolwidths=20))
         else:
             print("Não existe nenhum filme cadastrado")

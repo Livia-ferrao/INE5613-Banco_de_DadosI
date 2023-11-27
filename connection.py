@@ -1,5 +1,6 @@
 import psycopg2 as db
 from config import Config
+from tabulate import tabulate
 
 class Connection(Config):
     def __init__(self):

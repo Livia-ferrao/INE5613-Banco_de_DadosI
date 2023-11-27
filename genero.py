@@ -42,8 +42,13 @@ class Genero(GenericTable):
     
     def print(self):
         if self.get_all():
-            print("--- GÊNEROS ---")
+            print("+------------------------------+")
+            print("|           GÊNEROS            |")
+            print("+------------------------------+")
+            print("|   ID  |        Nome          |")
+            print("+------------------------------+")
             for i in self.get_all():
-                print(f"{i[0]} - {i[1]}")
+                print(f"| {i[0]:^5} | {i[1]:^20} |")
+            print("+------------------------------+")
         else:
             print("Não existe nenhum gênero cadastrado")
