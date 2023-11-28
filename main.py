@@ -554,7 +554,7 @@ if __name__ == "__main__":
                 escolha = input("Escolha uma opção: ")
 
                 if escolha == "1":
-                    hora = input("Digite o horário: ")
+                    hora = input("Digite o horário (horas:minutos:segundos): ")
                     horario.insert(hora)
 
                 elif escolha == "2":
